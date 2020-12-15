@@ -6,7 +6,7 @@
 #    By: snara <snara@student.42tokyo.jp>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/02 13:59:38 by snara             #+#    #+#              #
-#    Updated: 2020/12/04 23:19:02 by snara            ###   ########.fr        #
+#    Updated: 2020/12/15 16:12:48 by snara            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,13 +17,13 @@ ft_isascii.c ft_isdigit.c ft_isalpha.c ft_isalnum.c ft_isprint.c ft_tolower.c ft
 ft_strlcpy.c ft_strlcat.c ft_strchr.c ft_strrchr.c ft_strnstr.c ft_strncmp.c ft_strlen.c \
 ft_calloc.c ft_atoi.c ft_itoa.c \
 ft_strmapi.c ft_split.c ft_strtrim.c ft_strjoin.c ft_substr.c ft_strdup.c \
-ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c ft_putstrcat_fd.c \
+ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c \
 ft_swap.c \
 ft_lstadd_back.c ft_lstclear.c ft_lstiter.c ft_lstmap.c ft_lstsize.c \
 ft_lstadd_front.c ft_lstdelone.c ft_lstlast.c ft_lstnew.c
 OBJS = ${SRCS:.c=.o}
 B_SRCS =
-B_OBJS = ${B_SRCS:.c=.o}
+B_OBJS = ${B_SRCS:%.c=%.o}
 
 T_SRCS = test.c
 T_RES = result.txt
@@ -38,7 +38,7 @@ $(NAME):	$(OBJS)  ${B_OBJS}
 		${AR} ${NAME} ${OBJS} ${B_OBJS}
 
 .c.o:
-		${CC} ${CFLAGS} -c $< -o $@
+		${CC} ${CFLAGS} -c $< -o $@ 
 
 clean:
 		rm -f ${OBJS} ${B_OBJS}

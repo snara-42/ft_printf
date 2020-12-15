@@ -6,7 +6,7 @@
 /*   By: snara <snara@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 14:32:07 by snara             #+#    #+#             */
-/*   Updated: 2020/12/04 23:19:26 by snara            ###   ########.fr       */
+/*   Updated: 2020/12/15 18:21:56 by snara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include <unistd.h>
 # include <stdlib.h>
+# include <limits.h>
+# define ABS(x) (((x) < 0) ? (-x) : (x))
 
 typedef struct		s_list
 {
@@ -58,11 +60,13 @@ char				*ft_strtrim(char const *s1, char const *set);
 char				**ft_split(char const *s, char c);
 char				*ft_itoa(int n);
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
-void				ft_putchar_fd(char c, int fd);
-void				ft_putstr_fd(char *s, int fd);
-void				ft_putstrcat_fd(char *s1, char *s2, int fd);
-void				ft_putendl_fd(char *s, int fd);
-void				ft_putnbr_fd(int n, int fd);
+int					ft_putchar_fd(char c, int fd);
+int					ft_putstr_fd(char *s, int fd);
+int					ft_putstrcat_fd(char *s1, char *s2, int fd);
+int					ft_putendl_fd(char *s, int fd);
+int					ft_putnbr_fd(int n, int fd);
+int					ft_putnbr_base(int n, char *base, int fd);
+int					ft_putnbr_baseu(unsigned int n, char *base, int fd);
 t_list				*ft_lstnew(void *content);
 void				ft_lstadd_front(t_list **lst, t_list *new);
 void				ft_lstadd_back(t_list **lst, t_list *new);

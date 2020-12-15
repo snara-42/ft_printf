@@ -6,13 +6,13 @@
 #    By: snara <snara@student.42tokyo.jp>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/02 13:59:38 by snara             #+#    #+#              #
-#    Updated: 2020/12/14 14:32:45 by snara            ###   ########.fr        #
+#    Updated: 2020/12/15 16:06:19 by snara            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libftprintf.a
 SRCS = ft_printf.c
-OBJS = ${SRCS:.c=.o}
+OBJS = ${SRCS:%.c=%.o}
 HDRS = ft_printf.h
 
 ifdef WITHBONUS
@@ -28,12 +28,13 @@ INC = -I. -I$(LPATH)
 CFLAGS = -Wall -Wextra -Werror
 
 %.o: %.c
-		${CC} ${CFLAGS} $(INC) -c $< 
+		${CC} ${CFLAGS} $(INC) -c $< -o $@
 
 all:	$(NAME)
 
 $(NAME): $(OBJS) $(LIB) $(HDRS)
-		ar rc $(NAME) $(LIB) $(OBJS)
+		cp $(LIB) ./$(NAME)
+		ar rcs $(NAME) $(OBJS)
 
 libft: $(LIB)
 $(LIB):
@@ -43,7 +44,7 @@ bonus:
 		make WITHBONUS=1 all
 
 clean:
-		@make -C $(LPATH)/ clean
+		make clean -C $(LPATH)
 		rm -f ${OBJS} ${B_OBJS}
 fclean:	clean	
 		rm -f ${LIB}

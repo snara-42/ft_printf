@@ -6,7 +6,7 @@
 /*   By: snara <snara@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 12:58:04 by snara             #+#    #+#             */
-/*   Updated: 2020/12/14 17:25:43 by snara            ###   ########.fr       */
+/*   Updated: 2020/12/15 15:51:46 by snara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <wchar.h>
-# include "libft.h"
+# include "libft/libft.h"
 # define ABS(x) (((x) < 0) ? (-x) : (x))
 # define FHASH(c) (((c) == '#') ? (1 << 0) : 0)
 # define FZERO(c) (((c) == '0') ? (1 << 1) : 0)

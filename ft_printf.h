@@ -6,7 +6,7 @@
 /*   By: snara <snara@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 12:58:04 by snara             #+#    #+#             */
-/*   Updated: 2020/12/15 15:51:46 by snara            ###   ########.fr       */
+/*   Updated: 2021/01/04 21:07:53 by snara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <stdio.h>
 # include <wchar.h>
 # include "libft/libft.h"
-# define ABS(x) (((x) < 0) ? (-x) : (x))
+# define ABS(x) (((x) < 0) ? (-(x)) : (x))
 # define FHASH(c) (((c) == '#') ? (1 << 0) : 0)
 # define FZERO(c) (((c) == '0') ? (1 << 1) : 0)
 # define FMINUS(c) (((c) == '-') ? (1 << 2) : 0)
@@ -31,11 +31,13 @@ typedef struct	s_fmt
 {
 	uint8_t		flag;
 	int			width;
-	int			precision;
-	int8_t		length;
+	int			prec;
+	int			length;
 	int			r;
-	int64_t		i;
-	uint64_t	u;
+	int			l;
+	long long	i;
+	t_ull		u;
+	t_ull		tmp;
 	void		*p;
 }				t_fmt;
 

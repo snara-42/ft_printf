@@ -6,21 +6,20 @@
 /*   By: snara <snara@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/05 21:46:28 by snara             #+#    #+#             */
-/*   Updated: 2020/11/11 09:33:22 by snara            ###   ########.fr       */
+/*   Updated: 2021/01/04 22:36:53 by snara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	nlen(int n, int b, int *e)
+int		ft_unlen(unsigned int n, unsigned int b, unsigned int *e)
 {
 	int	i;
 
 	if (b < 2)
 		return (0);
-	e[0] = 1;
-	i = (n < 0) ? 2 : 1;
-	while (e[0] <= ((n < 0) ? -(n / b) : (n / b)))
+	i = 1;
+	while (e[0] <= (n / b))
 	{
 		e[0] *= b;
 		i++;
@@ -28,7 +27,23 @@ static int	nlen(int n, int b, int *e)
 	return (i);
 }
 
-char		*ft_itoa(int n)
+int		ft_nlen(int n, int b, int *e)
+{
+	int	i;
+
+	if (b < 2)
+		return (0);
+	i = 1;
+	while (n / b != 0)
+	{
+		n /= b;
+		e[0] *= b;
+		i++;
+	}
+	return (i);
+}
+
+char	*ft_itoa(int n)
 {
 	const int	b = 10;
 	const char	digit[b] = "0123456789";
@@ -37,7 +52,7 @@ char		*ft_itoa(int n)
 	int			e;
 
 	e = 1;
-	if ((d = (char *)malloc(sizeof(char) * (nlen(n, b, &e) + 1))) == NULL)
+	if ((d = (char *)malloc(sizeof(char) * (ft_nlen(n, b, &e) + 1))) == NULL)
 		return (NULL);
 	if (n < (i = 0))
 		d[i++] = '-';

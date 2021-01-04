@@ -6,7 +6,7 @@
 /*   By: snara <snara@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/05 21:48:48 by snara             #+#    #+#             */
-/*   Updated: 2020/12/15 14:44:39 by snara            ###   ########.fr       */
+/*   Updated: 2020/12/23 16:45:39 by snara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,16 @@ int	ft_putchar_fd(char c, int fd)
 		u[1] = 0x80 | ((unsigned char)c & 0x3f);
 		r = write(fd, u, 2);
 	}
+	return (r);
+}
+
+int	ft_putchar_n(char c, int n, int fd)
+{
+	int	r;
+
+	r = 0;
+	while (0 < n--)
+		r += write(fd, &c, 1);
 	return (r);
 }
 

@@ -6,25 +6,27 @@
 #    By: snara <snara@student.42tokyo.jp>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/02 13:59:38 by snara             #+#    #+#              #
-#    Updated: 2020/12/15 16:06:19 by snara            ###   ########.fr        #
+#    Updated: 2021/01/04 22:38:38 by snara            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libftprintf.a
-SRCS = ft_printf.c
-OBJS = ${SRCS:%.c=%.o}
 HDRS = ft_printf.h
 
 ifdef WITHBONUS
-SRCS +=  
+SRCS = 
+else
+SRCS = ft_printf.c
 endif
+
+OBJS = ${SRCS:%.c=%.o}
 
 LPATH = libft/
 LIBFT = libft.a
 LIB = $(LPATH)$(LIBFT)
 
 CC = gcc
-INC = -I. -I$(LPATH)
+INC = -I$(LPATH)
 CFLAGS = -Wall -Wextra -Werror
 
 %.o: %.c
@@ -37,7 +39,7 @@ $(NAME): $(OBJS) $(LIB) $(HDRS)
 		ar rcs $(NAME) $(OBJS)
 
 libft: $(LIB)
-$(LIB):
+$(LIB): $(LPATH)*.c $(LPATH)*.h
 		make -C $(LPATH)
 
 bonus:
@@ -46,9 +48,11 @@ bonus:
 clean:
 		make clean -C $(LPATH)
 		rm -f ${OBJS} ${B_OBJS}
+
 fclean:	clean	
 		rm -f ${LIB}
 		rm -f a.out ${NAME}
+
 re: fclean all
 
 noodle:

@@ -6,7 +6,7 @@
 /*   By: snara <snara@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/05 21:49:40 by snara             #+#    #+#             */
-/*   Updated: 2020/12/15 14:54:39 by snara            ###   ########.fr       */
+/*   Updated: 2020/12/23 17:37:50 by snara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,19 @@ int	ft_putstrcat_fd(char *s1, char *s2, int fd)
 	j = 0;
 	while (s2 && s2[j])
 		j++;
-	return ((s1 ? write(fd, s1, i) : 0) + (s2 ? write(fd, s2, i) : 0));
+	return ((s1 ? write(fd, s1, i) : 0) + (s2 ? write(fd, s2, j) : 0));
+}
+
+int	ft_putstr_n(char *s, int n, int fd)
+{
+	int	i;
+
+	i = 0;
+	if (!s)
+		return (0);
+	while (s[i])
+		i++;
+	return (write(fd, s, i < n || n < 0 ? i : n));
 }
 
 /*

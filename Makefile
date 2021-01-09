@@ -6,17 +6,18 @@
 #    By: snara <snara@student.42tokyo.jp>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/02 13:59:38 by snara             #+#    #+#              #
-#    Updated: 2021/01/04 22:38:38 by snara            ###   ########.fr        #
+#    Updated: 2021/01/09 23:17:59 by snara            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libftprintf.a
-HDRS = ft_printf.h
 
 ifdef WITHBONUS
+HDRS = ft_printf.h
 SRCS = 
 else
-SRCS = ft_printf.c
+HDRS = ft_printf.h
+SRCS = ft_printf.c libft.c
 endif
 
 OBJS = ${SRCS:%.c=%.o}
@@ -26,34 +27,33 @@ LIBFT = libft.a
 LIB = $(LPATH)$(LIBFT)
 
 CC = gcc
-INC = -I$(LPATH)
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -I.
 
 %.o: %.c
-		${CC} ${CFLAGS} $(INC) -c $< -o $@
+		${CC} ${CFLAGS} -c $<
 
 all:	$(NAME)
 
-$(NAME): $(OBJS) $(LIB) $(HDRS)
-		cp $(LIB) ./$(NAME)
+$(NAME): $(OBJS) $(HDRS)
 		ar rcs $(NAME) $(OBJS)
 
 libft: $(LIB)
-$(LIB): $(LPATH)*.c $(LPATH)*.h
+$(LIB):
 		make -C $(LPATH)
 
 bonus:
 		make WITHBONUS=1 all
 
 clean:
-		make clean -C $(LPATH)
 		rm -f ${OBJS} ${B_OBJS}
 
 fclean:	clean	
-		rm -f ${LIB}
 		rm -f a.out ${NAME}
 
 re: fclean all
+
+test:
+	make && ${CC} ${CFLAGS} ${NAME} test_.c && ./a.out
 
 noodle:
 	@clear

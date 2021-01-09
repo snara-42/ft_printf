@@ -6,7 +6,7 @@
 /*   By: snara <snara@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 12:54:45 by snara             #+#    #+#             */
-/*   Updated: 2021/01/04 22:47:14 by snara            ###   ########.fr       */
+/*   Updated: 2021/01/10 02:00:39 by snara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,111 +19,98 @@ int		ft_vfprintf(int fd, const char *fmt, va_list va)
 
 	i = 0;
 	f.r = 0;
-	while (fmt[i] != '\0')
+	while (fmt && *fmt != '\0')
 	{
-		if (fmt[i] == '%')
+		if (*fmt == '%')
 		{
 			f.flag = 0;
 			f.width = 0;
 			f.prec = -1;
 			f.length = 0;
-			f.tmp = 1;
-			while (ft_strchr("#0- +", fmt[++i]))
+			f.t = 0;
+			while (ft_strchr("#0- +", *++fmt))
+				f.flag |= FLAG(*fmt);
+			if (*fmt == '*')
 			{
-				f.flag |= FLAG(fmt[i]);
-			}
-			if (fmt[i] == '*')
-			{
-				i++;
 				f.width = va_arg(va, int);
 				f.flag |= (f.width < 0 ? FMINUS('-') : 0);
 				f.width = ABS(f.width);
+				fmt++;
 			}
 			else
-				while (ft_isdigit(fmt[i]))
-				{
-					f.width = 10 * f.width + fmt[i++] - '0';
-				}
-			if (fmt[i] == '.')
+				while ('0' <= *fmt && *fmt <= '9')
+					f.width = 10 * f.width + *fmt++ - '0';
+			if (*fmt == '.' && fmt[1] == '*')
 			{
-				if (fmt[++i] == '*')
-				{
-					i++;
-					f.prec = va_arg(va, int);
-				}
-				else
-				{
-					f.prec = (fmt[i] == '-' ? -1 : 0);
-					while (ft_isdigit(fmt[i]))
-					{
-						f.prec = 10 * f.prec + fmt[i++] - '0';
-					}
-				}
+				f.prec = va_arg(va, int);
+				fmt += 2;
 			}
-			if (fmt[i] == 'h' || fmt[i] == 'l')
+			else if (*fmt == '.')
 			{
-				f.length += (fmt[i] == 'h' ? -1 - (fmt[i + 1] == 'h') : 1 + (fmt[i + 1] == 'l'));
-				i += ABS(f.length);
+				f.prec = (*++fmt == '-' ? -1 : 0);
+				while ('0' <= *fmt && *fmt <= '9')
+					f.prec = 10 * f.prec + *fmt++ - '0';
 			}
-			if (fmt[i] == 'c' || fmt[i] == '%')
+			if (*fmt == 'c' || *fmt == '%')
 			{
-				f.u = (fmt[i] == '%' ? '%' : (unsigned char)va_arg(va, int));
-				f.r += ft_putchar_n("0 "[!(f.flag & FZERO('0'))], (f.flag & FMINUS('-') ? 0 : --f.width), fd);
+				f.u = (*fmt == '%' ? '%' : (unsigned char)va_arg(va, int));
+				f.r += ft_putcharn("0 "[!(f.flag & FZERO('0'))], (f.flag & FMINUS('-') ? 0 : --f.width), fd);
 				f.r += write(fd, &f.u, 1);
-				f.r += ft_putchar_n(' ', (f.flag & FMINUS('-') ? --f.width : 0), fd);
+				f.r += ft_putcharn(' ', (f.flag & FMINUS('-') ? --f.width : 0), fd);
 			}
-			else if (fmt[i] == 's')
+			else if (*fmt == 's')
 			{
-				f.p = (char*)va_arg(va, const char*);
+				f.p = va_arg(va, char*);
 				f.l = ft_strnlen(f.p ? f.p : "(null)", f.prec);
-				f.r += ft_putchar_n("0 "[!(f.flag & FZERO('0'))], !(f.flag & FMINUS('-')) * (f.width - f.l), fd);
-				f.r += ft_putstr_n(f.p ? f.p : "(null)", f.prec, fd);
-				f.r += ft_putchar_n(' ', !!(f.flag & FMINUS('-')) * (f.width - f.l), fd);
+				f.r += ft_putcharn("0 "[!(f.flag & FZERO('0'))], !(f.flag & FMINUS('-')) * (f.width - f.l), fd);
+				f.r += ft_putstrn(f.p ? f.p : "(null)", f.prec, fd);
+				f.r += ft_putcharn(' ', !!(f.flag & FMINUS('-')) * (f.width - f.l), fd);
 			}
-			else if (fmt[i] == 'd' || fmt[i] == 'i')
+			else if (*fmt == 'd' || *fmt == 'i')
 			{
 				f.i = va_arg(va, int);
-				f.l = (f.i || f.prec) * (ft_nlen(f.i, 10, (int*)&f.tmp) + !!(f.flag & (FPLUS('+') | FSPACE(' ')) || f.i < 0));
-				f.r += ft_putchar_n("0 "[!(f.flag & FZERO('0'))], !(f.flag & FMINUS('-')) * (f.width - f.prec - f.l), fd);
-				f.r += write(fd, &"- +"[!(f.i < 0) * (1 + !(f.flag & FSPACE(' ')))], !!(f.flag & (FPLUS('+') | FSPACE(' ')) || f.i < 0));
-				f.r += ft_putchar_n('0', (f.prec - f.l), fd);
-				f.r += (f.i || f.prec) ? ft_putnbr_fd(f.i, fd) : 0;
-				f.r += ft_putchar_n(' ', !!(f.flag & FMINUS('-')) * (f.width - f.l), fd);
+				f.l = ft_nlen(f.i, 10, f.prec) + !!(f.flag & (FPLUS('+') | FSPACE(' ')) || f.i < 0);
+				f.t += ft_putcharn(' ', !((f.flag & FMINUS('-')) || (f.flag & FZERO('0') && f.prec < 0)) * (f.width - f.l), fd);
+				f.t += write(fd, &"- +"[!(f.i < 0) * (1 + !(f.flag & FSPACE(' ')))], !!((f.flag & (FPLUS('+') | FSPACE(' '))) || f.i < 0));
+				f.t += ft_putcharn('0', ((f.flag & FZERO('0') && !(f.flag & FMINUS('-')) && f.prec < 0) ? f.width - f.l : f.prec - ft_nlen(f.i, 10, 1)), fd);
+				f.t += (f.i || f.prec) ? ft_putnbr_base(f.i, "0123456789", fd) : 0;
+				f.t += ft_putcharn(' ', !!(f.flag & FMINUS('-')) * (f.width - f.t), fd);
+				f.r += f.t;
 			}
-			else if (fmt[i] == 'u')
+			else if (*fmt == 'u')
 			{
 				f.u = va_arg(va, unsigned int);
 				f.r += ft_putnbr_baseu(f.u, "0123456789", fd);
 			}
-			else if (ft_strchr("oxX", fmt[i]))
+			else if (ft_strchr("oxX", *fmt))
 			{
 				f.u = va_arg(va, unsigned int);
-				f.l = ft_unlen(f.u, 8 * (1 + !(fmt[i] == 'o')), ((unsigned int*)&f.tmp));
-				f.r += ft_putchar_n("0 "[!(f.flag & FZERO('0'))], !(f.flag & FMINUS('-')) * (f.width - f.l), fd);
-				f.r += write(fd, "0x", (f.flag & FHASH('#')) * (1 + !(fmt[i] == 'o')));
-				if (fmt[i] == 'o')
+				f.l = ft_nlenu(f.u, 8 * (1 + !(*fmt == 'o')), f.prec);
+				f.r += ft_putcharn("0 "[!(f.flag & FZERO('0'))], !(f.flag & FMINUS('-')) * (f.width - f.l), fd);
+				f.r += write(fd, "0x", (f.flag & FHASH('#')) * (1 + !(*fmt == 'o')));
+				if (*fmt == 'o')
 					f.r += ft_putnbr_baseu(f.u, "01234567", fd);
-				else if (fmt[i] == 'x')
+				else if (*fmt == 'x')
 					f.r += ft_putnbr_baseu(f.u, "0123456789abcdef", fd);
-				else if (fmt[i] == 'X')
+				else if (*fmt == 'X')
 					f.r += ft_putnbr_baseu(f.u, "0123456789ABCDEF", fd);
-				f.r += ft_putchar_n(' ', !!(f.flag & FMINUS('-')) * (f.width - f.l), fd);
+				f.r += ft_putcharn(' ', !!(f.flag & FMINUS('-')) * (f.width - f.l), fd);
 			}
-			else if (fmt[i] == 'p')
+			else if (*fmt == 'p')
 			{
 				f.flag |= FHASH('#');
 				f.u = (t_ull)va_arg(va, void*);
 				f.r += write(fd, "0x", 2);
 				f.r += ft_putnbr_baseu(f.u, "0123456789abcdef", fd);
 			}
-			else if (fmt[i] == 'n')
+			else if (*fmt == 'n')
 			{
 				*va_arg(va, int*) = f.r;
 			}
-			i++;
 		}
 		else
-			f.r += write(fd, &fmt[i++], 1);
+			f.r += write(fd, fmt, 1);
+		fmt++;
 	}
 	return (f.r);
 }

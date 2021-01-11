@@ -6,7 +6,7 @@
 /*   By: snara <snara@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 19:32:24 by snara             #+#    #+#             */
-/*   Updated: 2021/01/10 00:25:22 by snara            ###   ########.fr       */
+/*   Updated: 2021/01/12 04:44:10 by snara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,28 +24,14 @@ char	*ft_strchr(const char *s, int c)
 	}
 }
 
-int		ft_nlenu(unsigned int n, unsigned int b, int l)
+int		ft_nlenu(t_ull n, t_ui b, int l)
 {
 	int	i;
 
 	if (b < 2)
 		return (0);
 	i = 1;
-	while ((n /= b) > 0)
-	{
-		i++;
-	}
-	return (i < l || n == 0 ? l : i);
-}
-
-int		ft_nlen(int n, int b, int l)
-{
-	int	i;
-
-	if (b < 2)
-		return (0);
-	i = 1;
-	while (n / b)
+	while (n / b > 0)
 	{
 		n /= b;
 		i++;
@@ -53,7 +39,22 @@ int		ft_nlen(int n, int b, int l)
 	return (i < l || (n == 0 && l == 0) ? l : i);
 }
 
-int	ft_putnbr_baseu(t_ull n, const char *base, int fd)
+int		ft_nlen(long long n, int b, int l)
+{
+	int	i;
+
+	if (b < 2)
+		return (0);
+	i = 1;
+	while (n / b != 0)
+	{
+		n /= b;
+		i++;
+	}
+	return (i < l || (n == 0 && l == 0) ? l : i);
+}
+
+int		ft_putnbr_baseu(t_ull n, const char *base, int fd)
 {
 	unsigned int	i;
 	int				r;
@@ -76,7 +77,7 @@ int	ft_putnbr_baseu(t_ull n, const char *base, int fd)
 	return (r);
 }
 
-int	ft_putnbr_base(long long n, const char *base, int fd)
+int		ft_putnbr_base(long long n, const char *base, int fd)
 {
 	int			i;
 	int			r;
@@ -99,7 +100,7 @@ int	ft_putnbr_base(long long n, const char *base, int fd)
 	return (r);
 }
 
-int	ft_putcharn(char c, int n, int fd)
+int		ft_putcharn(const char c, int n, int fd)
 {
 	int	r;
 
@@ -109,24 +110,14 @@ int	ft_putcharn(char c, int n, int fd)
 	return (r);
 }
 
-int	ft_strnlen(const char *s, int n)
-{
-	int	i;
-
-	i = 0;
-	while ((i < n || n < 0) && s[i])
-		i++;
-	return (i);
-}
-
-int	ft_putstrn(char *s, int n, int fd)
+int		ft_putstrn(const char *s, int n, int fd)
 {
 	int	i;
 
 	i = 0;
 	if (!s)
 		return (0);
-	while (s[i])
+	while ((i < n || n < 0) && s[i])
 		i++;
-	return (write(fd, s, i < n || n < 0 ? i : n));
+	return (fd < 0 ? i : write(fd, s, i));
 }

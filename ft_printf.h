@@ -6,7 +6,7 @@
 /*   By: snara <snara@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 12:58:04 by snara             #+#    #+#             */
-/*   Updated: 2021/01/20 02:40:29 by snara            ###   ########.fr       */
+/*   Updated: 2021/01/20 02:54:03 by snara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int				ft_putnbr_baseu(unsigned long long n, const char*base, int fd);
 int				ft_putcn(const char c, int n, int fd);
 int				ft_putsn(const char *s, int n, int fd);
 int				ft_putsc(const char *s, const char c, int fd);
-char			*ft_strchr(const char *s, int c);
+char			*ft_strc(const char *s, int c);
 int				ft_prefl(const char *fmt, t_fmt *f);
 char			*ft_strnc(const char*str, const char*find, size_t s, char c);
 

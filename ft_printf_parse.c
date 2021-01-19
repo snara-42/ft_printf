@@ -6,7 +6,7 @@
 /*   By: snara <snara@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 01:53:29 by snara             #+#    #+#             */
-/*   Updated: 2021/01/20 02:16:52 by snara            ###   ########.fr       */
+/*   Updated: 2021/01/20 02:55:42 by snara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	fmt_argn(t_fmt *f, const char *fmt, va_list va)
 
 static char	*fmt_arg(t_fmt *f, const char *fmt, char **c, va_list va)
 {
-	if (ft_strchr("cdi", *fmt))
+	if (ft_strnc("c d i ", fmt, 1, ' '))
 		f->i = va_arg(va, int);
 	else if (ft_strnc("lld lli ld li D ", fmt, 3, ' '))
 		f->i = (fmt[1] == 'l' ? va_arg(va, long long) : va_arg(va, long));
@@ -71,7 +71,7 @@ static char	*fmt_arg(t_fmt *f, const char *fmt, char **c, va_list va)
 char		*fmt_parse(t_fmt *f, const char *fmt, char **c, va_list va)
 {
 	fmt_init(f);
-	while (ft_strchr("#0- +", *++fmt))
+	while (ft_strc("#0- +", *++fmt))
 		f->flag |= FLAG(*fmt);
 	if (*fmt == '*')
 	{

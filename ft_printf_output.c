@@ -6,7 +6,7 @@
 /*   By: snara <snara@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 01:43:38 by snara             #+#    #+#             */
-/*   Updated: 2021/01/20 02:44:55 by snara            ###   ########.fr       */
+/*   Updated: 2021/01/20 02:56:17 by snara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,13 @@ static int	ft_printf_f(t_fmt *f, const char *fmt, int fd)
 
 int			fmt_print(t_fmt *f, const char *fmt, int fd)
 {
-	if (ft_strchr("%cCsS", *fmt))
+	if (ft_strc("%cCsS", *fmt))
 		ft_printf_c(f, fmt, fd);
-	else if (ft_strchr("idD", *fmt))
+	else if (ft_strc("idD", *fmt))
 		ft_printf_i(f, fmt, fd);
-	else if (ft_strchr("poOuUxX", *fmt))
+	else if (ft_strc("poOuUxX", *fmt))
 		ft_printf_u(f, fmt, fd);
-	else if (ft_strchr("fFeEgGaA", *fmt))
+	else if (ft_strc("fFeEgGaA", *fmt))
 		ft_printf_f(f, fmt, fd);
 	else if (*fmt != 'n')
 		f->r += write(fd, fmt, 1);

@@ -6,13 +6,13 @@
 /*   By: snara <snara@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 14:30:51 by snara             #+#    #+#             */
-/*   Updated: 2021/01/19 23:51:12 by snara            ###   ########.fr       */
+/*   Updated: 2021/01/20 02:56:39 by snara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-char	*ft_strchr(const char *s, int c)
+char	*ft_strc(const char *s, int c)
 {
 	while (s && *s)
 	{

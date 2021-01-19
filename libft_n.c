@@ -1,30 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft.c                                            :+:      :+:    :+:   */
+/*   libft_n.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: snara <snara@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/09 19:32:24 by snara             #+#    #+#             */
-/*   Updated: 2021/01/12 04:44:10 by snara            ###   ########.fr       */
+/*   Created: 2021/01/15 14:21:31 by snara             #+#    #+#             */
+/*   Updated: 2021/01/20 00:40:57 by snara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-char	*ft_strchr(const char *s, int c)
+int		ft_prefl(const char *fmt, t_fmt *f)
 {
-	while (1)
-	{
-		if (*s == (char)c)
-			return ((char *)s);
-		else if (*s == '\0')
-			return (NULL);
-		s++;
-	}
+	if (*fmt == 'p' ||
+		((*fmt == 'x' || *fmt == 'X') && f->flag & FLAG('#') && f->u))
+		return (2);
+	else if (((*fmt == 'o' || *fmt == 'O') && (f->flag & FLAG('#')
+		&& (((f->flag & FLAG('0') && !(f->flag & FLAG('-')) && f->prec < 0) ?
+		f->width - f->l : f->prec - ft_nlenu(f->u, BASE(*fmt), 1) <= 0)
+		&& (f->u != 0 || f->prec == 0))))
+		|| (ft_strchr("diD", *fmt)
+		&& (f->flag & (FLAG(' ') | FLAG('+')) || f->i < 0)))
+		return (1);
+	return (0);
 }
 
-int		ft_nlenu(t_ull n, t_ui b, int l)
+int		ft_nlenu(unsigned long long n, unsigned int b, int l)
 {
 	int	i;
 
@@ -92,32 +95,10 @@ int		ft_putnbr_base(long long n, const char *base, int fd)
 	e = -1;
 	while (e >= -ABS(n / i))
 		e *= i;
-	while (e < 0)
+	while (0 != e)
 	{
 		r += write(fd, &base[ABS(n / e % i)], 1);
 		e /= i;
 	}
 	return (r);
-}
-
-int		ft_putcharn(const char c, int n, int fd)
-{
-	int	r;
-
-	r = 0;
-	while (0 < n--)
-		r += write(fd, &c, 1);
-	return (r);
-}
-
-int		ft_putstrn(const char *s, int n, int fd)
-{
-	int	i;
-
-	i = 0;
-	if (!s)
-		return (0);
-	while ((i < n || n < 0) && s[i])
-		i++;
-	return (fd < 0 ? i : write(fd, s, i));
 }

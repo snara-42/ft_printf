@@ -6,7 +6,7 @@
 #    By: snara <snara@student.42tokyo.jp>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/02 13:59:38 by snara             #+#    #+#              #
-#    Updated: 2021/01/12 02:16:32 by snara            ###   ########.fr        #
+#    Updated: 2021/01/20 01:52:59 by snara            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,14 +17,10 @@ HDRS = ft_printf.h
 SRCS = 
 else
 HDRS = ft_printf.h
-SRCS = ft_printf.c libft.c
+SRCS = ft_printf.c ft_printf_parse.c ft_printf_output.c libft_c.c libft_n.c
 endif
 
 OBJS = ${SRCS:%.c=%.o}
-
-LPATH = libft/
-LIBFT = libft.a
-LIB = $(LPATH)$(LIBFT)
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -I.
@@ -45,7 +41,7 @@ bonus:
 		make WITHBONUS=1 all
 
 clean:
-		rm -f ${OBJS} ${B_OBJS} a.out
+		rm -f ${OBJS} ${B_OBJS}
 
 fclean:	clean	
 		rm -f a.out ${NAME}
@@ -53,7 +49,7 @@ fclean:	clean
 re: fclean all
 
 test:
-	make && ${CC} ${NAME} test_.c && ./a.out
+	make && ${CC} -fsanitize=address ${NAME} test_.c && ./a.out
 
 noodle:
 	@clear

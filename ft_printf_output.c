@@ -6,7 +6,7 @@
 /*   By: snara <snara@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 01:43:38 by snara             #+#    #+#             */
-/*   Updated: 2021/01/20 07:13:45 by snara            ###   ########.fr       */
+/*   Updated: 2021/01/20 07:38:10 by snara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,14 @@ static int	ft_printf_c(t_fmt *f, const char *fmt, int fd)
 
 static int	ft_printf_i(t_fmt *f, const char *fmt, int fd)
 {
-	f->l = ft_prefl(fmt, f) + ft_nlen(f->i, BASE(*fmt), f->prec);
+	f->l = ft_prefl(fmt, f) + ft_nlenl(f->i, BASE(*fmt), f->prec);
 	f->t += ft_putcn(' ', !(f->flag & FLAG('0') && f->prec < 0)
 			&& !(f->flag & FLAG('-')) ? f->width - f->l : 0, fd);
 	f->t += write(fd, &"-+ "[!(f->i < 0) * (1 + !(f->flag & FLAG('+')))],
 			ft_prefl(fmt, f));
 	f->t += ft_putcn('0', (f->flag & FLAG('0')
 			&& !(f->flag & FLAG('-')) && f->prec < 0) ?
-			f->width - f->l : f->prec - ft_nlen(f->i, 10, 1), fd);
+			f->width - f->l : f->prec - ft_nlenl(f->i, 10, 1), fd);
 	f->t += f->i || f->prec ? ft_putnbr_base(f->i, "0123456789", fd) : 0;
 	f->t += ft_putcn(' ', !!(f->flag & FLAG('-')) * (f->width - f->t), fd);
 	f->r += f->t;

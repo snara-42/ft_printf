@@ -6,7 +6,7 @@
 #    By: snara <snara@student.42tokyo.jp>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/02 13:59:38 by snara             #+#    #+#              #
-#    Updated: 2021/01/20 07:19:03 by snara            ###   ########.fr        #
+#    Updated: 2021/01/20 07:44:22 by snara            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,9 @@ CFLAGS = -Wall -Wextra -Werror -I.
 
 all:	$(NAME)
 
-$(NAME): $(OBJS) $(HDRS)
+$(NAME): $(OBJS) $(HDRS) $(LPATH)
+		make -C $(LPATH)
+		cp $(LIB) $(NAME)
 		ar rcs $(NAME) $(OBJS)
 
 libft: $(LIB)
@@ -45,9 +47,10 @@ bonus:
 
 clean:
 		rm -f ${OBJS} ${B_OBJS}
+		make -C $(LPATH) clean
 
 fclean:	clean	
-		rm -f a.out ${NAME}
+		rm -f a.out $(NAME) $(LIB)
 
 re: fclean all
 

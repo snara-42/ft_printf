@@ -6,7 +6,7 @@
 /*   By: snara <snara@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 14:21:31 by snara             #+#    #+#             */
-/*   Updated: 2021/01/20 03:04:21 by snara            ###   ########.fr       */
+/*   Updated: 2021/01/20 07:38:40 by snara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int		ft_nlenu(unsigned long long n, unsigned int b, int l)
 	return (i < l || (n == 0 && l == 0) ? l : i);
 }
 
-int		ft_nlen(long long n, int b, int l)
+int		ft_nlenl(long long n, int b, int l)
 {
 	int	i;
 

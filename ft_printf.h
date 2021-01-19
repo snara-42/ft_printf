@@ -6,7 +6,7 @@
 /*   By: snara <snara@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 12:58:04 by snara             #+#    #+#             */
-/*   Updated: 2021/01/20 07:05:44 by snara            ###   ########.fr       */
+/*   Updated: 2021/01/20 07:38:28 by snara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int				ft_vdprintf(int fd, const char *fmt, va_list va);
 char			*fmt_parse(t_fmt *f, const char *fmt, char **c, va_list va);
 int				fmt_print(t_fmt *f, const char *fmt, int fd);
 int				ft_prefl(const char *fmt, t_fmt *f);
-int				ft_nlen(long long n, int b, int l);
+int				ft_nlenl(long long n, int b, int l);
 int				ft_nlenu(unsigned long long n, unsigned int b, int l);
 int				ft_putnbr_base(long long n, const char *base, int fd);
 int				ft_putnbr_baseu(unsigned long long n, const char*base, int fd);

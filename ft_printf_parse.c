@@ -6,7 +6,7 @@
 /*   By: snara <snara@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 01:53:29 by snara             #+#    #+#             */
-/*   Updated: 2021/01/20 02:55:42 by snara            ###   ########.fr       */
+/*   Updated: 2021/01/20 03:01:32 by snara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static char	*fmt_arg(t_fmt *f, const char *fmt, char **c, va_list va)
 		f->i = (fmt[0] == '%' ? '%' : va_arg(va, wchar_t));
 	else
 		fmt_argn(f, fmt, va);
-	fmt += ft_strchr("lhjztL", *fmt) ? 2 - !ft_strnc("ll hh ", fmt, 2, ' ') : 0;
+	fmt += ft_strc("lhjztL", *fmt) ? 2 - !ft_strnc("ll hh ", fmt, 2, ' ') : 0;
 	return ((*c = (char*)fmt));
 }
 

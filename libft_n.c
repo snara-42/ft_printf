@@ -6,7 +6,7 @@
 /*   By: snara <snara@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 14:21:31 by snara             #+#    #+#             */
-/*   Updated: 2021/01/20 00:40:57 by snara            ###   ########.fr       */
+/*   Updated: 2021/01/20 03:04:21 by snara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int		ft_prefl(const char *fmt, t_fmt *f)
 		&& (((f->flag & FLAG('0') && !(f->flag & FLAG('-')) && f->prec < 0) ?
 		f->width - f->l : f->prec - ft_nlenu(f->u, BASE(*fmt), 1) <= 0)
 		&& (f->u != 0 || f->prec == 0))))
-		|| (ft_strchr("diD", *fmt)
+		|| ((*fmt == 'd' || *fmt == 'D' || *fmt == 'i')
 		&& (f->flag & (FLAG(' ') | FLAG('+')) || f->i < 0)))
 		return (1);
 	return (0);

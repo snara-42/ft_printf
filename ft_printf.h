@@ -6,7 +6,7 @@
 /*   By: snara <snara@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 12:58:04 by snara             #+#    #+#             */
-/*   Updated: 2021/01/20 02:54:03 by snara            ###   ########.fr       */
+/*   Updated: 2021/01/20 03:02:23 by snara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # define FSPACE(c) (((c) == ' ') ? 8 : 0)
 # define FZERO(c) (((c) == '0') ? 16 : 0)
 # define FLAG(c) (FHASH(c) | FZERO(c) | FMINUS(c) | FSPACE(c) | FPLUS(c))
-# define BASE(c) (ft_strchr("dDiuUfFeEgG", (c)) ? 10 : BASEX(c))
+# define BASE(c) (ft_strc("dDiuUfFeEgG", (c)) ? 10 : BASEX(c))
 # define BASEX(c) (((c) == 'x' || (c) == 'X' || (c) == 'p') ? 16 : BASEO(c))
 # define BASEO(c) (((c) == 'o' || (c) == 'O') ? 8 : 10)
 # define DIGIT(c) ((BASE(c) == 10) ? "0123456789" : DIGITU(c))

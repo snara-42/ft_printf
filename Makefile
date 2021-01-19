@@ -6,7 +6,7 @@
 #    By: snara <snara@student.42tokyo.jp>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/02 13:59:38 by snara             #+#    #+#              #
-#    Updated: 2021/01/20 01:52:59 by snara            ###   ########.fr        #
+#    Updated: 2021/01/20 07:19:03 by snara            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,11 +14,14 @@ NAME = libftprintf.a
 
 ifdef WITHBONUS
 HDRS = ft_printf.h
-SRCS = 
+SRCS = ft_printf.c ft_printf_parse.c ft_printf_output.c libft_c.c libft_n.c
 else
 HDRS = ft_printf.h
 SRCS = ft_printf.c ft_printf_parse.c ft_printf_output.c libft_c.c libft_n.c
 endif
+
+LPATH = libft/
+LIB = $(LPATH)libft.a
 
 OBJS = ${SRCS:%.c=%.o}
 

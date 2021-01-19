@@ -6,7 +6,7 @@
 /*   By: snara <snara@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 12:58:04 by snara             #+#    #+#             */
-/*   Updated: 2021/01/20 03:02:23 by snara            ###   ########.fr       */
+/*   Updated: 2021/01/20 07:05:44 by snara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int				ft_printf(const char *fmt, ...);
 int				ft_vdprintf(int fd, const char *fmt, va_list va);
 char			*fmt_parse(t_fmt *f, const char *fmt, char **c, va_list va);
 int				fmt_print(t_fmt *f, const char *fmt, int fd);
+int				ft_prefl(const char *fmt, t_fmt *f);
 int				ft_nlen(long long n, int b, int l);
 int				ft_nlenu(unsigned long long n, unsigned int b, int l);
 int				ft_putnbr_base(long long n, const char *base, int fd);
@@ -71,7 +72,6 @@ int				ft_putcn(const char c, int n, int fd);
 int				ft_putsn(const char *s, int n, int fd);
 int				ft_putsc(const char *s, const char c, int fd);
 char			*ft_strc(const char *s, int c);
-int				ft_prefl(const char *fmt, t_fmt *f);
 char			*ft_strnc(const char*str, const char*find, size_t s, char c);
 
 #endif

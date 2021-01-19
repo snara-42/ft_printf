@@ -6,14 +6,14 @@
 /*   By: snara <snara@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 18:56:23 by snara             #+#    #+#             */
-/*   Updated: 2021/01/20 02:21:18 by snara            ###   ########.fr       */
+/*   Updated: 2021/01/20 03:19:03 by snara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-#define ARG FMT,INT_MIN,LONG_MAX,15,L'a',15,2,1,INT_MIN,'%'
-#define FMT "%s|%lld|%hhu|hello, world|%#12.x|%010lc|%12.x|%.*u|%#05.o|%#x|\n"
+#define ARG FMT,INT_MIN,INT_MAX,15,'a',63,-13,12,INT_MIN,"",'%'
+#define FMT "%s|%d|%i|hello, world|%12.5x|%-4.3X|%06.3o|%*.*u|%-15.p|%c|\n"
 
 int	main(void)
 {

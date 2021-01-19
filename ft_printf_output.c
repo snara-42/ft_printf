@@ -6,11 +6,16 @@
 /*   By: snara <snara@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 01:43:38 by snara             #+#    #+#             */
-/*   Updated: 2021/01/20 02:56:17 by snara            ###   ########.fr       */
+/*   Updated: 2021/01/20 07:13:45 by snara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+static int	ft_printf_f(t_fmt *f, const char *fmt, int fd)
+{
+	return (f->r + 0 * *fmt * fd);
+}
 
 static int	ft_printf_c(t_fmt *f, const char *fmt, int fd)
 {
@@ -32,7 +37,8 @@ static int	ft_printf_i(t_fmt *f, const char *fmt, int fd)
 	f->l = ft_prefl(fmt, f) + ft_nlen(f->i, BASE(*fmt), f->prec);
 	f->t += ft_putcn(' ', !(f->flag & FLAG('0') && f->prec < 0)
 			&& !(f->flag & FLAG('-')) ? f->width - f->l : 0, fd);
-	f->t += write(fd, PREFX(*fmt), ft_prefl(fmt, f));
+	f->t += write(fd, &"-+ "[!(f->i < 0) * (1 + !(f->flag & FLAG('+')))],
+			ft_prefl(fmt, f));
 	f->t += ft_putcn('0', (f->flag & FLAG('0')
 			&& !(f->flag & FLAG('-')) && f->prec < 0) ?
 			f->width - f->l : f->prec - ft_nlen(f->i, 10, 1), fd);
@@ -55,11 +61,6 @@ static int	ft_printf_u(t_fmt *f, const char *fmt, int fd)
 	f->t += ft_putcn(' ', !!(f->flag & FLAG('-')) * (f->width - f->t), fd);
 	f->r += f->t;
 	return (f->r);
-}
-
-static int	ft_printf_f(t_fmt *f, const char *fmt, int fd)
-{
-	return (f->r + 0 * *fmt * fd);
 }
 
 int			fmt_print(t_fmt *f, const char *fmt, int fd)

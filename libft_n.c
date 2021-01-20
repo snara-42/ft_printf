@@ -6,7 +6,7 @@
 /*   By: snara <snara@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 14:21:31 by snara             #+#    #+#             */
-/*   Updated: 2021/01/20 11:56:55 by snara            ###   ########.fr       */
+/*   Updated: 2021/01/20 21:31:58 by snara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,17 @@ int		ft_prefl(const char *fmt, t_fmt *f)
 		((*fmt == 'x' || *fmt == 'X') && f->flag & FLAG('#') && f->u))
 		return (2);
 	else if (((*fmt == 'o' || *fmt == 'O') && (f->flag & FLAG('#')
-		&& (((f->flag & FLAG('0') && !(f->flag & FLAG('-')) && f->prec < 0) ?
-		f->width - f->l : f->prec - ft_nlenu(f->u, BASE(*fmt), 1) <= 0)
+		&& ((((f->flag & FLAG('0') && !(f->flag & FLAG('-')) && f->prec < 0) ?
+		f->width - f->l : f->prec - ft_nlenu(f->u, BASE(*fmt), 1)) <= 0)
 		&& (f->u != 0 || f->prec == 0))))
 		|| ((*fmt == 'd' || *fmt == 'D' || *fmt == 'i')
-		&& (f->flag & (FLAG(' ') | FLAG('+')) || f->i < 0)))
+		&& (f->flag & (FLAG(' ') | FLAG('+')) || f->i < 0))
+		|| ((*fmt == 'f' || *fmt == 'e' || *fmt == 'g'
+		|| *fmt == 'F' || *fmt == 'E' || *fmt == 'G')
+		&& (f->flag & (FLAG(' ') | FLAG('+')) || f->f < 0)))
 		return (1);
+	else if (*fmt == 'a' || *fmt == 'A')
+		return (2 + (f->flag & (FLAG(' ') | FLAG('+')) || f->f < 0));
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: snara <snara@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 01:53:29 by snara             #+#    #+#             */
-/*   Updated: 2021/01/20 03:01:32 by snara            ###   ########.fr       */
+/*   Updated: 2021/01/21 04:54:59 by snara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	fmt_init(t_fmt *f)
 	f->f = 0;
 }
 
-static void	fmt_argn(t_fmt *f, const char *fmt, va_list va)
+static void	fmt_argn(t_fmt *f, const char *fmt, char **c, va_list va)
 {
 	if (*fmt == 'n')
 		*va_arg(va, int*) = (int)f->r;
@@ -42,9 +42,11 @@ static void	fmt_argn(t_fmt *f, const char *fmt, va_list va)
 		f->p = va_arg(va, char*);
 	else if (ft_strnc("ls S ", fmt, 2, ' '))
 		f->p = va_arg(va, wchar_t*);
+	else if (*fmt)
+		fmt_arg(f, ++fmt, c, va);
 }
 
-static char	*fmt_arg(t_fmt *f, const char *fmt, char **c, va_list va)
+char		*fmt_arg(t_fmt *f, const char *fmt, char **c, va_list va)
 {
 	if (ft_strnc("c d i ", fmt, 1, ' '))
 		f->i = va_arg(va, int);
@@ -63,8 +65,9 @@ static char	*fmt_arg(t_fmt *f, const char *fmt, char **c, va_list va)
 	else if (ft_strnc("lc C % ", fmt, 2, ' '))
 		f->i = (fmt[0] == '%' ? '%' : va_arg(va, wchar_t));
 	else
-		fmt_argn(f, fmt, va);
-	fmt += ft_strc("lhjztL", *fmt) ? 2 - !ft_strnc("ll hh ", fmt, 2, ' ') : 0;
+		fmt_argn(f, fmt, c, va);
+	while (*fmt && ft_strc("lhjztL", *fmt))
+		fmt++;
 	return ((*c = (char*)fmt));
 }
 

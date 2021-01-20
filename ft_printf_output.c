@@ -6,7 +6,7 @@
 /*   By: snara <snara@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 01:43:38 by snara             #+#    #+#             */
-/*   Updated: 2021/01/20 12:07:03 by snara            ###   ########.fr       */
+/*   Updated: 2021/01/21 05:00:58 by snara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	ft_printf_f(t_fmt *f, const char *fmt, int fd)
 {
-	f->l = ft_flen(f->f, f->prec);
+	f->l = ft_flen(f->f, BASE(*fmt), f->prec);
 	return (f->r + 0 * *fmt * fd);
 }
 
@@ -74,7 +74,7 @@ int			fmt_print(t_fmt *f, const char *fmt, int fd)
 		ft_printf_u(f, fmt, fd);
 	else if (ft_strc("fFeEgGaA", *fmt))
 		ft_printf_f(f, fmt, fd);
-	else if (*fmt != 'n')
+	else if (*fmt && *fmt != 'n')
 		f->r += write(fd, fmt, 1);
 	return (f->r);
 }

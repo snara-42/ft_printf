@@ -6,7 +6,7 @@
 /*   By: snara <snara@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 01:43:38 by snara             #+#    #+#             */
-/*   Updated: 2021/01/20 07:38:10 by snara            ###   ########.fr       */
+/*   Updated: 2021/01/20 12:07:03 by snara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static int	ft_printf_f(t_fmt *f, const char *fmt, int fd)
 {
+	f->l = ft_flen(f->f, f->prec);
 	return (f->r + 0 * *fmt * fd);
 }
 

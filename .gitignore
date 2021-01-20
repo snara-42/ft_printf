@@ -1,0 +1,7 @@
+*.o
+*.gch
+a.out
+*.a
+*test*
+*.txt
+.*

@@ -6,7 +6,7 @@
 /*   By: snara <snara@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 12:58:04 by snara             #+#    #+#             */
-/*   Updated: 2021/01/20 07:38:28 by snara            ###   ########.fr       */
+/*   Updated: 2021/01/20 12:04:43 by snara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <stdlib.h>
 # include <wchar.h>
 # include <limits.h>
+# define F_INT 309
+# define F_FRAC 1075
 # define ABS(x) (((x) < 0) ? (-(x)) : (x))
 # define MAX(x, y) (((x) < (y)) ? (y) : (x))
 # define MIN(x, y) (((x) > (y)) ? (y) : (x))
@@ -50,12 +52,14 @@ typedef struct
 	int			width;
 	int			prec;
 	int			length;
-	int			r;
+	long		r;
 	int			l;
 	int			t;
 	t_ll		i;
 	t_ull		u;
 	double		f;
+	char		fi[F_INT];
+	char		fr[F_FRAC];
 	void		*p;
 }	t_fmt;
 
@@ -73,5 +77,6 @@ int				ft_putsn(const char *s, int n, int fd);
 int				ft_putsc(const char *s, const char c, int fd);
 char			*ft_strc(const char *s, int c);
 char			*ft_strnc(const char*str, const char*find, size_t s, char c);
+int				ft_flen(double d, int l);
 
 #endif

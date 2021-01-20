@@ -6,7 +6,7 @@
 /*   By: snara <snara@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 14:21:31 by snara             #+#    #+#             */
-/*   Updated: 2021/01/20 07:38:40 by snara            ###   ########.fr       */
+/*   Updated: 2021/01/20 11:56:55 by snara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,11 @@ int		ft_nlenl(long long n, int b, int l)
 	return (i < l || (n == 0 && l == 0) ? l : i);
 }
 
-int		ft_putnbr_baseu(t_ull n, const char *base, int fd)
+int		ft_putnbr_baseu(unsigned long long n, const char *base, int fd)
 {
-	unsigned int	i;
-	int				r;
-	t_ull			e;
+	unsigned int		i;
+	int					r;
+	unsigned long long	e;
 
 	i = 0;
 	r = 0;

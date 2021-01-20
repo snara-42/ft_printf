@@ -6,7 +6,7 @@
 /*   By: snara <snara@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 12:54:45 by snara             #+#    #+#             */
-/*   Updated: 2021/01/20 02:42:06 by snara            ###   ########.fr       */
+/*   Updated: 2021/01/20 08:58:50 by snara            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int			ft_vdprintf(int fd, const char *fmt, va_list va)
 	t_fmt	f;
 
 	f.r = 0;
-	while (fmt && *fmt != '\0')
+	while (fmt && *fmt != '\0' && 0 <= f.r && f.r < INT_MAX)
 	{
 		f.r += ft_putsc(fmt, '%', fd);
 		if (*(fmt += ft_putsc(fmt, '%', -1)) == '%')
@@ -27,7 +27,7 @@ int			ft_vdprintf(int fd, const char *fmt, va_list va)
 			fmt++;
 		}
 	}
-	return (f.r);
+	return (f.r < 0 || INT_MAX <= f.r ? -1 : (int)f.r);
 }
 
 int			ft_printf(const char *fmt, ...)
